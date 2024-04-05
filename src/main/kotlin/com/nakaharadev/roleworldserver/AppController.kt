@@ -17,6 +17,6 @@ class AppController {
 
     @PostMapping("/auth/sign_up")
     fun singUp(@RequestBody body: AuthRequest.SignUpRequest): AuthResponse? {
-        return AuthResponse(200, "12345ff43d");
+        return AuthResponse(200, "12345ff43d")
     }
 }

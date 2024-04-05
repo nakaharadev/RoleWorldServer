@@ -1,5 +1,6 @@
 package com.nakaharadev.roleworldserver.models
 
+
 object AuthRequest {
     class SignInRequest {
         lateinit var email: String
