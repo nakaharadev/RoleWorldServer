@@ -45,6 +45,11 @@ class WebController {
         return HtmlLoader.loadHtml("download.html").data
     }
 
+    @GetMapping("/web/app")
+    fun app(): String {
+        return HtmlLoader.loadHtml("app.html").data
+    }
+
     @GetMapping("/download/{name}")
     fun downloadFile(@PathVariable name: String): ResponseEntity<Resource> {
         val downloadDir = "C:\\Users\\user\\Desktop\\RoleWorldServer_rewrite\\src\\main\\resources\\download_files"

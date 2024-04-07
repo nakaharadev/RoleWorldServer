@@ -17,9 +17,11 @@ body {
 body::-webkit-scrollbar {
     width: 4px;               /* ширина scrollbar */
 }
+
 body::-webkit-scrollbar-track {
     background: transparent;        /* цвет дорожки */
 }
+
 body::-webkit-scrollbar-thumb {
     background-color: #fff;    /* цвет плашки */
     border-radius: 2px;       /* закругления плашки */
@@ -29,20 +31,25 @@ body::-webkit-scrollbar-thumb {
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:    #aaa;
 }
+
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
    color:    #aaa;
    opacity:  1;
 }
+
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
    color:    #aaa;
    opacity:  1;
 }
+
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
    color:    #aaa;
 }
+
 ::-ms-input-placeholder { /* Microsoft Edge */
    color:    #aaa;
 }
+
 ::placeholder { /* Most modern browsers support this now. */
    color:    #aaa;
 }
