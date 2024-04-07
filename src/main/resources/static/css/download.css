@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+}
+
+.block__inner {
+    width: 100%;
+    height: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.data_block__inner {
+    padding: 40px 0 40px 0;
+}
+
+.header {
+    width: 100%;
+    height: 70px;
+    background-color: #00000055;
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+}
+
+.flex__inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header_icon {
+    width: 30px;
+}
+
+.header_nav {
+    width: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 100px;
+}
+
+.header_logo_nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav_elem {
+    text-decoration: none;
+    color: #ccc;
+    font-size: 15pt;
+    text-transform: uppercase;
+    font-family: "Montserrat", sans-serif;
+    font-style: normal;
+    font-optical-sizing: auto;
+    transition: color .2s;
+}
+
+.nav_elem:hover {
+    color: #fff;
+}
+
+.active {
+    color: #00fffa;
+}
+
+.active:hover {
+    color: #00fffa;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+}
+
+.search_icon {
+    width: 30px;
+    cursor: pointer;
+}
+
+.search_input {
+    width: 0px;
+    color: #fff;
+    background: transparent;
+    border: none;
+    font-size: 15pt;
+    color: #eee;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    transition: width .3s;
+}
+
+.search:hover {
+    .search_input {
+        width: 300px;
+    }
+}
+
+input[type="text"], input[type="password"], textarea, select {
+    outline: none;
+}
+
+.download {
+    height: 100%;
+}
+
+.title {
+    color: #fff;
+    font-family: "Montserrat", sans-serif;
+    font-style: normal;
+    font-optical-sizing: auto;
+    font-size: 30pt;
+    margin: 0;
+}
+
+.attention {
+    color: #aaa;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 13pt;
+    margin: 0;
+}
+
+.title_block {
+    margin-bottom: 50px;
+}
+
+.icon_block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.download_icon {
+    width: 50px;
+}
+
+.download_icon_hint {
+    color: #999;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 12pt;
+    margin: 0;
+}
+
+.download_href {
+    text-decoration: none;
+    color: #fff;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 15pt;
+    margin: 0;
+}
+
+.download_os_block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}

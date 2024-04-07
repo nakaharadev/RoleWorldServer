@@ -1,0 +1,318 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow-y: scroll;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+}
+
+body::-webkit-scrollbar {
+    width: 4px;               /* ширина scrollbar */
+}
+body::-webkit-scrollbar-track {
+    background: transparent;        /* цвет дорожки */
+}
+body::-webkit-scrollbar-thumb {
+    background-color: #fff;    /* цвет плашки */
+    border-radius: 2px;       /* закругления плашки */
+    border: none;  /* padding вокруг плашки */
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #aaa;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #aaa;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #aaa;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #aaa;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #aaa;
+}
+::placeholder { /* Most modern browsers support this now. */
+   color:    #aaa;
+}
+
+.intro {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+}
+
+.block__inner {
+    width: 100%;
+    height: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    width: 100%;
+    height: 70px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #00000055;
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+}
+
+.flex__inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header_icon {
+    width: 30px;
+}
+
+.header_nav {
+    width: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 100px;
+}
+
+.header_logo_nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav_elem {
+    text-decoration: none;
+    color: #ccc;
+    font-size: 15pt;
+    text-transform: uppercase;
+    font-family: "Montserrat", sans-serif;
+    font-style: normal;
+    font-optical-sizing: auto;
+    transition: color .2s;
+}
+
+.nav_elem:hover {
+    color: #fff;
+}
+
+.active {
+    color: #00fffa;
+}
+
+.active:hover {
+    color: #00fffa;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+}
+
+.search_icon {
+    width: 30px;
+    cursor: pointer;
+}
+
+.search_input {
+    width: 0px;
+    color: #fff;
+    background: transparent;
+    border: none;
+    font-size: 15pt;
+    color: #eee;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    transition: width .3s;
+}
+
+.search:hover {
+    .search_input {
+        width: 300px;
+    }
+}
+
+input[type="text"], input[type="password"], textarea, select {
+    outline: none;
+}
+
+.intro_data {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.intro_text_data {
+    display: flex;
+    flex-direction: column;
+}
+
+.intro_main_text {
+    color: #fff;
+    font-family: "Montserrat", sans-serif;
+    font-style: normal;
+    font-optical-sizing: auto;
+    font-size: 40pt;
+    margin: 0;
+}
+
+.intro_subtext {
+    color: #ccc;
+    font-family: "Caveat", cursive;
+    font-style: normal;
+    font-optical-sizing: auto;
+    font-size: 20pt;
+    margin: 0;
+}
+
+.screenshot {
+    border-radius: 20px;
+    height: 65vh;
+}
+
+#auth_screenshot {
+    margin-right: 40px;
+}
+
+.video_bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+}
+
+.to_bottom_container {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+    height: 100px;
+}
+
+.design_info {
+    width: 100%;
+    background-color: #121212;
+}
+
+.data_block__inner {
+    padding: 40px 0 40px 0;
+}
+
+.block_title {
+    color: #fff;
+    font-family: "Montserrat", sans-serif;
+    font-style: normal;
+    font-optical-sizing: auto;
+    font-size: 30pt;
+    margin: 0;
+}
+
+.design_data {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.desc_line {
+    color: #eee;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 20pt;
+}
+
+.desc_line::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: #eee;
+    border-radius: 5px;
+    display: inline-block;
+    margin-right: 5px;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -5px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .animated {
+        opacity: 0;
+        transition-delay: 1s;
+        transition: opacity 5s ease;
+    }
+}
+
+.show_transition {
+  opacity: 1;
+}
+
+.download_or_web {
+    width: 100%;
+    display: flex;
+    background-color: #212223;
+}
+
+.download_welcome {
+    color: #ccc;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 20pt;
+}
+
+.download_btn {
+    display: block;
+    height: 30px;
+    width: 150px;
+    text-align: center;
+    padding: 10px;
+    border: 1px #fff solid;
+    border-radius: 15px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 15pt;
+    text-transform: uppercase;
+    font-family: "Montserrat", sans-serif;
+    font-style: normal;
+    font-optical-sizing: auto;
+    transition: color, background-color .2s;
+    vertical-align: middle;
+    line-height: 30px;
+}
+
+.download_btn:hover {
+    background-color: #fff;
+    color: #212223;
+}
+
+.footer {
+    background-color: #000;
+}
+
+.footer_data {
+    color: #aaa;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 12pt;
+}

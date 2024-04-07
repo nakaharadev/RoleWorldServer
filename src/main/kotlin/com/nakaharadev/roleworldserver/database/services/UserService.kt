@@ -17,4 +17,8 @@ class UserService {
     fun getAll(): List<UserEntity> {
         return repository.findAll()
     }
+
+    fun findByEmail(email: String): UserEntity? {
+        return repository.findByEmail(email)
+    }
 }
