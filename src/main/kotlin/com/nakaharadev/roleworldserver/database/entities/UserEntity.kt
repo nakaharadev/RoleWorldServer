@@ -8,9 +8,9 @@ import org.hibernate.annotations.GenericGenerator
 data class UserEntity(
     @Id
     @Column(name = "id")
-    @GenericGenerator(name = "generator", strategy = "increment")
-    @GeneratedValue(generator = "generator")
-    var id: Int,
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    var id: String,
     @Column(name = "nickname")
     var nickname: String,
     @Column(name = "email")
@@ -18,9 +18,11 @@ data class UserEntity(
     @Column(name = "password")
     var password: String,
     @Column(name = "avatar")
-    val avatar: String
+    val avatar: String,
+    @Column(name = "characters")
+    val characters: String
 ) {
-    constructor() : this(0, "", "", "", "")
+    constructor() : this("", "", "", "", "", "")
     override fun toString(): String {
         return "UserEntity{\n" +
                 "\tid='$id'\n" +
@@ -28,6 +30,7 @@ data class UserEntity(
                 "\temail='$email'\n" +
                 "\tpassword='$password'\n" +
                 "\tavatar='$avatar'\n" +
+                "\tcharacters=$characters\n" +
                 "}"
     }
 }

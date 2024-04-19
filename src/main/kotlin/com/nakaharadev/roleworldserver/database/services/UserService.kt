@@ -23,15 +23,19 @@ class UserService {
         return repository.findByEmail(email)
     }
 
-    fun findById(id: Int): Optional<UserEntity> {
+    fun findById(id: String): Optional<UserEntity> {
         return repository.findById(id)
     }
 
-    fun updateAvatar(userId: Int, name: String) {
+    fun updateAvatar(userId: String, name: String) {
         repository.saveAvatar(userId, name)
     }
 
-    fun updateNickname(userId: Int, value: String) {
+    fun updateNickname(userId: String, value: String) {
         repository.updateNickname(userId, value)
+    }
+
+    fun setCharacters(userId: String, value: String) {
+        repository.setCharacters(userId, value)
     }
 }

@@ -9,17 +9,22 @@ import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
 @Repository
-interface UserRepository : JpaRepository<UserEntity, Int> {
+interface UserRepository : JpaRepository<UserEntity, String> {
     @Query("SELECT u FROM UserEntity u WHERE u.email = :email")
     fun findByEmail(@Param("email") email: String): UserEntity?
 
     @Transactional
     @Modifying
     @Query("UPDATE UserEntity u SET u.avatar = :name WHERE u.id = :id")
-    fun saveAvatar(@Param("id") id: Int, @Param("name") name: String)
+    fun saveAvatar(@Param("id") id: String, @Param("name") name: String)
 
     @Transactional
     @Modifying
     @Query("UPDATE UserEntity u SET u.nickname = :value WHERE u.id = :id")
-    fun updateNickname(@Param("id") id: Int, @Param("value") name: String)
+    fun updateNickname(@Param("id") id: String, @Param("value") name: String)
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE UserEntity u SET u.characters = :value WHERE u.id = :id")
+    fun setCharacters(@Param("id") id: String, @Param("value") name: String)
 }
