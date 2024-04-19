@@ -1,15 +1,24 @@
-import { SourceComponent } from "./ui/components/SourceComponent.js";
-import { VideoBackgroundComponent } from "./ui/components/VideoBackgroundComponent.js"
+import { auth } from "./controllers/authController.js"
+import * as app from "./controllers/appController.js"
 
-function initBackground() {
-    let background = new VideoBackgroundComponent();
-    background.setSource("https://6bb8b6dc-uiuiui.s3.timeweb.cloud/files/wally/1058100.mp4")
+function getMainPage(userData) {
+    let buttonContainer = document.querySelector("#done_button_container");
 
-    document.body.innerHTML = background.getAsHtml();
+
+    return fetch("http://localhost:8080/web/main_page")
+            .then(response => response.text())
+            .then(mainHtml => app.initAfterAuth(mainHtml, userData));
 }
 
 function main() {
-    initBackground();
+    let userData = localStorage.getItem("userData");
+    if (userData != null) {
+        getMainPage(JSON.parse(userData));
+    } else {
+        auth(getMainPage);
+    }
 }
 
-main()
+window.onload = function() {
+    main();
+}

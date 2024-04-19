@@ -16,15 +16,18 @@ data class UserEntity(
     @Column(name = "email")
     var email: String,
     @Column(name = "password")
-    var password: String
+    var password: String,
+    @Column(name = "avatar")
+    val avatar: String
 ) {
-    constructor() : this(0, "", "", "")
+    constructor() : this(0, "", "", "", "")
     override fun toString(): String {
         return "UserEntity{\n" +
                 "\tid='$id'\n" +
                 "\tnickname='$nickname'\n" +
                 "\temail='$email'\n" +
                 "\tpassword='$password'\n" +
+                "\tavatar='$avatar'\n" +
                 "}"
     }
 }
