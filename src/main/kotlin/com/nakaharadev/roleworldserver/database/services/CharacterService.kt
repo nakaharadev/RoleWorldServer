@@ -18,4 +18,24 @@ class CharacterService(val repository: CharacterRepository) {
     fun findByName(name: String): CharacterEntity {
         return repository.findByName(name)
     }
+
+    fun updateName(id: String, name: String) {
+        repository.updateName(id, name)
+    }
+
+    fun updateDescription(id: String, desc: String) {
+        repository.updateDescription(id, desc)
+    }
+
+    fun updateBio(id: String, bio: String) {
+        repository.updateBio(id, bio)
+    }
+
+    fun updateAvatar(id: String, avatar: String) {
+        repository.updateAvatar(id, avatar)
+    }
+
+    fun updateSex(id: String, sex: String) {
+        repository.updateSex(id, sex)
+    }
 }

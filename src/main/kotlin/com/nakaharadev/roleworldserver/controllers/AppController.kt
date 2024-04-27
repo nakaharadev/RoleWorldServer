@@ -17,12 +17,13 @@ import java.util.*
 class AppController(val userService: UserService, val characterService: CharacterService) {
     @PostMapping("/auth/sign_in")
     fun signIn(@RequestBody body: AuthRequest.SignInRequest): AuthResponse? {
-        val entity = userService.findByEmail(body.email) ?: return AuthResponse(404, "", "", "")
+        val entity = userService.findByEmail(body.email) ?: return AuthResponse(404, "", "", "", "")
 
-        if (body.password.hashCode().toString() == entity.password) {
-            return AuthResponse(200, entity.id, entity.nickname, entity.characters)
+        return if (body.password.hashCode().toString() == entity.password) {
+            val showId = entity.showId ?: ""
+            AuthResponse(200, entity.id, showId, entity.nickname, entity.characters)
         } else {
-            return AuthResponse(506, "", "", "")
+            AuthResponse(506, "", "", "", "")
         }
     }
 
@@ -30,11 +31,12 @@ class AppController(val userService: UserService, val characterService: Characte
     fun singUp(@RequestBody body: AuthRequest.SignUpRequest): AuthResponse? {
         for (elem: UserEntity in userService.getAll()) {
             if (body.email == elem.email) {
-                return AuthResponse(506, "", "", "")
+                return AuthResponse(506, "", "", "", "")
             }
         }
 
         var entity = UserEntity(
+            "",
             "",
             body.nickname,
             body.email,
@@ -47,7 +49,8 @@ class AppController(val userService: UserService, val characterService: Characte
 
         entity = userService.findByEmail(body.email)!!
 
-        return AuthResponse(200, entity.id, entity.nickname, entity.characters)
+        val showId = entity.showId ?: ""
+        return AuthResponse(200, entity.id, showId, entity.nickname, entity.characters)
     }
 
     @PostMapping("/update_user/{user_id}/avatar")
@@ -91,7 +94,11 @@ class AppController(val userService: UserService, val characterService: Characte
         var entity = CharacterEntity(
             "",
             characterName,
-            filename
+            filename,
+            "",
+            "",
+            "",
+            ""
         )
 
         characterService.save(entity)
@@ -121,6 +128,68 @@ class AppController(val userService: UserService, val characterService: Characte
         return UpdateResponse(200)
     }
 
+    @PostMapping("/update_character/{id}/name")
+    fun updateCharacterName(
+        @PathVariable("id") id: String,
+        @RequestBody body: UpdateRequest
+    ): UpdateResponse {
+        characterService.updateName(id, body.value)
+
+        return UpdateResponse(200)
+    }
+
+    @PostMapping("/update_character/{id}/sex")
+    fun updateCharacterSex(
+        @PathVariable("id") id: String,
+        @RequestBody body: UpdateRequest
+    ): UpdateResponse {
+        characterService.updateSex(id, body.value)
+
+        return UpdateResponse(200)
+    }
+
+    @PostMapping("/update_character/{id}/desc")
+    fun updateCharacterDesc(
+        @PathVariable("id") id: String,
+        @RequestBody body: UpdateRequest
+    ): UpdateResponse {
+        characterService.updateDescription(id, body.value)
+
+        return UpdateResponse(200)
+    }
+
+    @PostMapping("/update_character/{id}/bio")
+    fun updateCharacterBio(
+        @PathVariable("id") id: String,
+        @RequestBody body: UpdateRequest
+    ): UpdateResponse {
+        characterService.updateBio(id, body.value)
+
+        return UpdateResponse(200)
+    }
+
+    @PostMapping("/update_character/{id}/avatar")
+    fun updateCharacterAvatar(
+        @PathVariable("id") id: String,
+        @RequestParam("avatar") file: MultipartFile
+    ): UpdateResponse {
+        val path = "C:\\Users\\user\\Desktop\\RoleWorldServer_rewrite\\src\\main\\resources\\characters_avatars"
+        val avatarsDir = File(path)
+        if (!avatarsDir.exists()) {
+            avatarsDir.mkdir()
+        }
+
+        val filename = UUID.randomUUID().toString() + ".png"
+
+        file.transferTo(File("$path\\$filename"))
+
+        File("$path\\${characterService.findById(id).get().avatar}").delete()
+
+        characterService.updateAvatar(id, filename)
+
+        return UpdateResponse(200)
+    }
+
     @GetMapping("/get_user_data/{user_id}/avatar")
     fun getAvatar(@PathVariable("user_id") id: String): ByteArray {
         val path = "C:\\Users\\user\\Desktop\\RoleWorldServer_rewrite\\src\\main\\resources\\users_avatars"
@@ -135,11 +204,20 @@ class AppController(val userService: UserService, val characterService: Characte
         return byteArray
     }
 
+    @GetMapping("/get_user_data/{user_id}/characters")
+    fun getCharacters(@PathVariable("user_id") id: String): GetCharactersResponse {
+        val user = userService.findById(id)
+
+        val characters = user.get().characters
+
+        return GetCharactersResponse(characters)
+    }
+
     @GetMapping("/get_character/{id}")
     fun getCharacter(@PathVariable("id") id: String): GetCharacterResponse {
         val character = characterService.findById(id).get()
 
-        return GetCharacterResponse(200, character.id, character.name)
+        return GetCharacterResponse(200, character.id, character.name, character.sex, character.description, character.bio)
     }
 
     @GetMapping("/get_character/avatar/{id}")

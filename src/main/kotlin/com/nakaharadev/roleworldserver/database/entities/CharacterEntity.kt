@@ -11,16 +11,34 @@ data class CharacterEntity(
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     var id: String,
+
     @Column(name = "nickname")
     var name: String,
+
     @Column(name = "avatar")
-    val avatar: String
+    var avatar: String = "",
+
+    @Column(name = "sex")
+    var sex: String = "",
+
+    @Column(name = "description", length = 5000)
+    var description: String = "",
+
+    @Column(name = "bio", length = 5000)
+    var bio: String = "",
+
+    @Column(name = "showId")
+    var showId: String = ""
 ) {
-    constructor() : this("", "", "")
+    constructor() : this("", "", "", "", "", "", "")
+
     override fun toString(): String {
         return "CharacterEntity {\n" +
                 "\tid='$id'\n" +
                 "\tavatar='$avatar'\n" +
+                "\tsex='$sex'\n" +
+                "\tdescription='$description'\n" +
+                "\tbio='$bio'\n" +
                 "}"
     }
 }

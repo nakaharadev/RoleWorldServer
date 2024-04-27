@@ -11,21 +11,30 @@ data class UserEntity(
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     var id: String,
+
+    @Column(name = "showId")
+    var showId: String? = null,
+
     @Column(name = "nickname")
     var nickname: String,
+
     @Column(name = "email")
     var email: String,
+
     @Column(name = "password")
     var password: String,
+
     @Column(name = "avatar")
     val avatar: String,
+
     @Column(name = "characters")
-    val characters: String
+    val characters: String = ""
 ) {
-    constructor() : this("", "", "", "", "", "")
+    constructor() : this("", "", "", "", "", "", "")
     override fun toString(): String {
-        return "UserEntity{\n" +
+        return "UserEntity {\n" +
                 "\tid='$id'\n" +
+                "\tshowId='$id'\n" +
                 "\tnickname='$nickname'\n" +
                 "\temail='$email'\n" +
                 "\tpassword='$password'\n" +
