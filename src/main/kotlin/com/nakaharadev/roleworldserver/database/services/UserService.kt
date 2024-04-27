@@ -38,4 +38,8 @@ class UserService {
     fun setCharacters(userId: String, value: String) {
         repository.setCharacters(userId, value)
     }
+
+    fun updateShowId(id: String, value: String) {
+        repository.updateShowingId(id, value)
+    }
 }

@@ -26,11 +26,8 @@ data class CharacterEntity(
 
     @Column(name = "bio", length = 5000)
     var bio: String = "",
-
-    @Column(name = "showId")
-    var showId: String = ""
 ) {
-    constructor() : this("", "", "", "", "", "", "")
+    constructor() : this("", "", "", "", "", "")
 
     override fun toString(): String {
         return "CharacterEntity {\n" +

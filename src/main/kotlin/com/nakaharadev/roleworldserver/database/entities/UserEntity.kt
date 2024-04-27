@@ -13,7 +13,7 @@ data class UserEntity(
     var id: String,
 
     @Column(name = "showId")
-    var showId: String? = null,
+    var showId: String = "",
 
     @Column(name = "nickname")
     var nickname: String,

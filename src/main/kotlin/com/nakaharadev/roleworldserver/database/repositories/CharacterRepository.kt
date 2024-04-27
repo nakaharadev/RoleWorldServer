@@ -30,11 +30,6 @@ interface CharacterRepository : CrudRepository<CharacterEntity, String> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE CharacterEntity c SET c.showId = :showId WHERE c.id = :id")
-    fun updateShowingId(@Param("id") id: String, @Param("showId") showId: String)
-
-    @Transactional
-    @Modifying
     @Query("UPDATE CharacterEntity c SET c.avatar = :avatar WHERE c.id = :id")
     fun updateAvatar(@Param("id") id: String, @Param("avatar") avatar: String)
 

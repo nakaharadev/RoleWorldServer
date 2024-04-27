@@ -27,4 +27,10 @@ interface UserRepository : JpaRepository<UserEntity, String> {
     @Modifying
     @Query("UPDATE UserEntity u SET u.characters = :value WHERE u.id = :id")
     fun setCharacters(@Param("id") id: String, @Param("value") name: String)
+
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE UserEntity c SET c.showId = :showId WHERE c.id = :id")
+    fun updateShowingId(@Param("id") id: String, @Param("showId") showId: String)
 }

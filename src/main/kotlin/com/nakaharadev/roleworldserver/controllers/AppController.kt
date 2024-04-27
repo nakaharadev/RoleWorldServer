@@ -20,8 +20,7 @@ class AppController(val userService: UserService, val characterService: Characte
         val entity = userService.findByEmail(body.email) ?: return AuthResponse(404, "", "", "", "")
 
         return if (body.password.hashCode().toString() == entity.password) {
-            val showId = entity.showId ?: ""
-            AuthResponse(200, entity.id, showId, entity.nickname, entity.characters)
+            AuthResponse(200, entity.id, entity.showId, entity.nickname, entity.characters)
         } else {
             AuthResponse(506, "", "", "", "")
         }
@@ -49,8 +48,7 @@ class AppController(val userService: UserService, val characterService: Characte
 
         entity = userService.findByEmail(body.email)!!
 
-        val showId = entity.showId ?: ""
-        return AuthResponse(200, entity.id, showId, entity.nickname, entity.characters)
+        return AuthResponse(200, entity.id, entity.showId, entity.nickname, entity.characters)
     }
 
     @PostMapping("/update_user/{user_id}/avatar")
@@ -75,6 +73,22 @@ class AppController(val userService: UserService, val characterService: Characte
         return UpdateResponse(200)
     }
 
+    @PostMapping("/update_user/{user_id}/show_id")
+    fun updateShowId(@PathVariable("user_id") id: String, @RequestBody value: UpdateRequest): UpdateResponse {
+        val users = userService.getAll()
+        val newShowId = value.value
+
+        for (user in users) {
+            if (user.showId == newShowId || user.id == newShowId) {
+                return UpdateResponse(409)
+            }
+        }
+
+        userService.updateShowId(id, value.value)
+        return UpdateResponse(200)
+    }
+
+
     @PostMapping("/update_user/{user_id}/add_character/{name}")
     fun addCharacter(
         @PathVariable("user_id") id: String,
@@ -98,7 +112,6 @@ class AppController(val userService: UserService, val characterService: Characte
             "",
             "",
             "",
-            ""
         )
 
         characterService.save(entity)
