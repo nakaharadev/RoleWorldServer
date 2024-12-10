@@ -1,43 +1,45 @@
 package com.nakaharadev.roleworldserver.html
 
-import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileNotFoundException
 import java.io.FileReader
-import java.io.InputStream
 
 
 object HtmlLoader {
-    private const val TEMPLATES_DIR = "C:\\Users\\user\\Desktop\\RoleWorldServer_rewrite\\src\\main\\resources\\templates"
-    private const val CSS_DIR = "C:\\Users\\user\\Desktop\\RoleWorldServer_rewrite\\src\\main\\resources\\static\\css"
-    private const val IMAGES_DIR = "C:\\Users\\user\\Desktop\\RoleWorldServer_rewrite\\src\\main\\resources\\static\\images"
-    private const val JS_DIR = "C:\\Users\\user\\Desktop\\RoleWorldServer_rewrite\\src\\main\\resources\\static\\js"
+    private val TEMPLATES_DIR = "${File(".").absolutePath}\\src\\main\\resources\\web\\templates"
+    private val CSS_DIR =       "${File(".").absolutePath}\\src\\main\\resources\\web\\static\\css"
+    private val IMAGES_DIR =    "${File(".").absolutePath}\\src\\main\\resources\\web\\static\\images"
+    private val JS_DIR =        "${File(".").absolutePath}\\src\\main\\resources\\web\\static\\js"
+    private val SVG_DIR =       "${File(".").absolutePath}\\src\\main\\resources\\web\\static\\svg"
 
-    fun loadHtml(name: String): HtmlFile {
-        val reader = FileReader(File("$TEMPLATES_DIR\\$name"))
-        val file = HtmlFile(reader.readText())
+    private fun loadFile(path: String): HtmlFile? {
+        try {
+            val reader = FileReader(File(path))
+            val file = HtmlFile(reader.readText())
 
-        reader.close()
+            reader.close()
 
-        return file
+            return file
+        } catch (e: FileNotFoundException) {
+            return null
+        }
     }
 
-    fun loadCss(name: String): HtmlFile {
-        val reader = FileReader(File("$CSS_DIR\\$name"))
-        val file = HtmlFile(reader.readText())
-
-        reader.close()
-
-        return file
+    fun loadHtml(name: String): HtmlFile? {
+        return loadFile("$TEMPLATES_DIR\\$name")
     }
 
-    fun loadJs(name: String): HtmlFile {
-        val reader = FileReader(File("$JS_DIR\\$name"))
-        val file = HtmlFile(reader.readText())
+    fun loadCss(name: String): HtmlFile? {
+        return loadFile("$CSS_DIR\\$name")
+    }
 
-        reader.close()
+    fun loadJs(name: String): HtmlFile? {
+        return loadFile("$JS_DIR\\$name")
+    }
 
-        return file
+    fun loadSvg(name: String): HtmlFile? {
+        return loadFile("$SVG_DIR\\$name")
     }
 
     fun loadImage(name: String): ByteArray {

@@ -56,7 +56,7 @@ class AppController(val userService: UserService, val characterService: Characte
         @PathVariable("user_id") id: String,
         @RequestParam("avatar") file: MultipartFile
     ): UpdateResponse {
-        val path = "C:\\Users\\user\\Desktop\\RoleWorldServer_rewrite\\src\\main\\resources\\users_avatars"
+        val path = "${File(".").absolutePath}\\src\\main\\resources\\non_git\\users_avatars"
         val avatarsDir = File(path)
         if (!avatarsDir.exists()) {
             avatarsDir.mkdir()
@@ -64,7 +64,10 @@ class AppController(val userService: UserService, val characterService: Characte
 
         val filename = UUID.randomUUID().toString() + ".png"
 
-        file.transferTo(File("$path\\$filename"))
+        val imgFile = File("$path\\$filename")
+        if (!imgFile.exists())
+            imgFile.createNewFile()
+        file.transferTo(imgFile)
 
         File("$path\\${userService.findById(id).get().avatar}").delete()
 
@@ -95,7 +98,7 @@ class AppController(val userService: UserService, val characterService: Characte
         @PathVariable("name") characterName: String,
         @RequestParam("character_avatar") file: MultipartFile
     ): AddResponse {
-        val path = "C:\\Users\\user\\Desktop\\RoleWorldServer_rewrite\\src\\main\\resources\\characters_avatars"
+        val path = "${File(".").absolutePath}\\src\\main\\resources\\non_git\\characters_avatars"
         val avatarsDir = File(path)
         if (!avatarsDir.exists()) {
             avatarsDir.mkdir()
@@ -186,7 +189,7 @@ class AppController(val userService: UserService, val characterService: Characte
         @PathVariable("id") id: String,
         @RequestParam("avatar") file: MultipartFile
     ): UpdateResponse {
-        val path = "C:\\Users\\user\\Desktop\\RoleWorldServer_rewrite\\src\\main\\resources\\characters_avatars"
+        val path = "${File(".").absolutePath}\\src\\main\\resources\\non_git\\characters_avatars"
         val avatarsDir = File(path)
         if (!avatarsDir.exists()) {
             avatarsDir.mkdir()
@@ -205,7 +208,7 @@ class AppController(val userService: UserService, val characterService: Characte
 
     @GetMapping("/get_user_data/{user_id}/avatar")
     fun getAvatar(@PathVariable("user_id") id: String): ByteArray {
-        val path = "C:\\Users\\user\\Desktop\\RoleWorldServer_rewrite\\src\\main\\resources\\users_avatars"
+        val path = "${File(".").absolutePath}\\src\\main\\resources\\non_git\\users_avatars"
 
         val user = userService.findById(id)
 
@@ -235,7 +238,7 @@ class AppController(val userService: UserService, val characterService: Characte
 
     @GetMapping("/get_character/avatar/{id}")
     fun getCharacterAvatar(@PathVariable("id") id: String): ByteArray {
-        val path = "C:\\Users\\user\\Desktop\\RoleWorldServer_rewrite\\src\\main\\resources\\characters_avatars"
+        val path = "${File(".").absolutePath}\\src\\main\\resources\\non_git\\characters_avatars"
 
         val character = characterService.findById(id)
 

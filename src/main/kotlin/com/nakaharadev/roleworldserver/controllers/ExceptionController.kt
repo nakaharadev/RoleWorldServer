@@ -12,6 +12,6 @@ class ExceptionController {
     @ExceptionHandler(NoHandlerFoundException::class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     fun notFound(e: NoHandlerFoundException): String {
-        return HtmlLoader.loadHtml("error/404.html").data
+        return HtmlLoader.loadHtml("error/404.html")?.data ?: ""
     }
 }
