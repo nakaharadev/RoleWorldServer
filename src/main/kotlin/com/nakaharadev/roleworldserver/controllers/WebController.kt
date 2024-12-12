@@ -8,10 +8,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.io.File
 import java.nio.file.Files
@@ -62,12 +59,15 @@ class WebController {
     }
 
     @GetMapping("/web/{name}")
-    fun getWebTemplate(@PathVariable name: String): ResponseEntity<String> {
-        val data = HtmlLoader.loadHtml("$name.html")?.data
+    fun getWebTemplate(@PathVariable name: String, @RequestParam("id", required=false) id: String?): ResponseEntity<String> {
+        var data = HtmlLoader.loadHtml("$name.html")?.data
+
         return if (data == null)
             ResponseEntity(HtmlLoader.loadHtml("error/404.html")?.data ?: "", HttpStatus.NOT_FOUND)
-        else
+        else {
+            if (id != null) data = putDataForKey(data, "id", id)
             ResponseEntity(data, HttpStatus.OK)
+        }
     }
 
     @GetMapping("/download/{name}")
@@ -83,5 +83,18 @@ class WebController {
             .contentLength(file.length())
             .contentType(MediaType.APPLICATION_OCTET_STREAM)
             .body(byteArrayResource)
+    }
+
+    fun putDataForKey(htmlData: String, key: String, value: String): String {
+        val htmlSplit = htmlData.split('%')
+        var result = ""
+
+        for (elem in htmlSplit) {
+            if (elem == key)
+                result += value
+            else result += elem
+        }
+
+        return result;
     }
 }
