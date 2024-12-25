@@ -1,6 +1,9 @@
 package com.nakaharadev.roleworldserver.controllers
 
+import com.google.gson.GsonBuilder
 import com.nakaharadev.roleworldserver.html.HtmlLoader
+import com.nakaharadev.roleworldserver.html.HtmlUtils
+import com.nakaharadev.roleworldserver.localize.Localize
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.core.io.FileSystemResource
 import org.springframework.core.io.Resource
@@ -23,8 +26,10 @@ class WebController {
     }
 
     @GetMapping("css/{name}")
-    fun getCss(@PathVariable name: String): String {
-        return HtmlLoader.loadCss(name)?.data ?: throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    fun getCss(@PathVariable name: String, @RequestParam("theme", required=false) theme: String?): String {
+        val params = HashMap<String, String?>()
+        params["theme"] = theme
+        return HtmlUtils.replaceAll(HtmlLoader.loadCss(name)?.data ?: throw ResponseStatusException(HttpStatus.NOT_FOUND), params)
     }
 
     @GetMapping("svg/{name}")
@@ -59,15 +64,33 @@ class WebController {
     }
 
     @GetMapping("/web/{name}")
-    fun getWebTemplate(@PathVariable name: String, @RequestParam("id", required=false) id: String?): ResponseEntity<String> {
-        var data = HtmlLoader.loadHtml("$name.html")?.data
+    fun getWebTemplate(@PathVariable name: String, @RequestParam("id", required=false) id: String?, @RequestParam("lang", required=false) lang: String?, @RequestParam("sex", required=false) sex: String?): ResponseEntity<String> {
+        val data = HtmlLoader.loadHtml("$name.html")?.data
 
         return if (data == null)
             ResponseEntity(HtmlLoader.loadHtml("error/404.html")?.data ?: "", HttpStatus.NOT_FOUND)
         else {
-            if (id != null) data = putDataForKey(data, "id", id)
-            ResponseEntity(data, HttpStatus.OK)
+            val varsMap = HashMap<String, String?>()
+            varsMap["id"] = id
+            varsMap["lang"] = lang
+            varsMap["sex"] = sex
+            ResponseEntity(HtmlUtils.replaceAll(data, varsMap), HttpStatus.OK)
         }
+    }
+
+    @GetMapping("/web/locale")
+    fun getLocaleValues(@RequestParam("lang", required=true) lang: String, @RequestParam("keys", required=true) keys: String): String {
+        val result = HashMap<String, String>()
+
+        if (keys == "*") {
+            return Localize.getAll(lang).toString()
+        } else {
+            for (key in keys.split('1')) {
+                result[key] = Localize.get(lang, key)
+            }
+        }
+
+        return GsonBuilder().create().toJson(result);
     }
 
     @GetMapping("/download/{name}")
@@ -83,18 +106,5 @@ class WebController {
             .contentLength(file.length())
             .contentType(MediaType.APPLICATION_OCTET_STREAM)
             .body(byteArrayResource)
-    }
-
-    fun putDataForKey(htmlData: String, key: String, value: String): String {
-        val htmlSplit = htmlData.split('%')
-        var result = ""
-
-        for (elem in htmlSplit) {
-            if (elem == key)
-                result += value
-            else result += elem
-        }
-
-        return result;
     }
 }
